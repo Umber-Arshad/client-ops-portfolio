@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lead follow-up queue | Umber Arshad</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#eef2ed;color:#193a32;font:17px/1.55 "Segoe UI",sans-serif}main{max-width:880px;margin:auto;padding:7vh 5vw}header{border-bottom:2px solid #25634e;padding-bottom:18px}small{letter-spacing:.06em}h1{font:clamp(38px,6vw,68px)/1.08 Georgia,serif;margin:16px 0}h2{font:30px Georgia,serif;margin:10px 0}section{background:white;border-radius:14px;padding:24px;margin:20px 0}label{display:block;font-weight:600;margin:10px 0}select,input,textarea{width:100%;padding:9px;border:1px solid #8da296;border-radius:6px;font:inherit;color:inherit}textarea{min-height:110px}output{display:block;color:#185a43}footer{font-size:14px}button{background:#205c47;color:white;border:0;border-radius:6px;padding:10px 16px;font:inherit;cursor:pointer}</style>
+<main><small><a href="../">UMBER ARSHAD · PORTFOLIO</a></small><h1>Lead follow-up queue</h1><p>Choose a daily review threshold to see which enquiries need a reply first.</p><section><label>Flag after this many hours<select id="limit"><option>4</option><option selected>12</option><option>24</option></select></label><div id="queue" aria-live="polite"></div></section><footer>Independent sample project · Fictional data</footer></main><script>
+const leads=[{name:'Willow Retail',hours:18},{name:'Harbour Supply',hours:6},{name:'Fern Studio',hours:28}];
+const answered=new Set();
+function render(){
+ const queue=document.querySelector('#queue');queue.replaceChildren();
+ for(const lead of [...leads].sort((a,b)=>b.hours-a.hours)){
+ const item=document.createElement('p'), button=document.createElement('button');
+ const done=answered.has(lead.name);
+ item.textContent=lead.name+' · '+lead.hours+' hours since enquiry · '+(done?'Replied':lead.hours>=Number(limit.value)?'Follow up now':'Within target')+' ';
+ button.textContent=done?'Undo':'Mark replied';button.onclick=()=>{if(done)answered.delete(lead.name);else answered.add(lead.name);render()};item.append(button);queue.append(item)
+ }}
+const limit=document.querySelector('#limit');limit.onchange=render;render();</script></html>
